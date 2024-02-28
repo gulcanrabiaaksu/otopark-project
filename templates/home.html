@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otopark Randevu Sistemine Hoş Geldiniz</title>
+    <!-- Bootstrap styles (if needed) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            position: relative;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20230713/pngtree-unoccupied-subterranean-parking-area-in-3d-render-image_3861570.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #2f4b5c;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .button-container button {
+            margin: 10px; /* Adjust the margin as needed */
+        }
+
+        .buttonStili {
+            background-color: #94745e;
+            border-color: #43413a;
+            color: #fff;
+            padding: 10px;
+            width: 48%; /* Adjust width as needed */
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 15px; /* Adjust the margin as needed for the space between buttons */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Otopark Randevu Sistemine Hoş Geldiniz! </h1>
+
+        <!-- Button container for "Giriş Yap" and "Üye Ol" buttons -->
+        <div class="button-container">
+            <a href="{{ url_for('login') }}" class="buttonStili">Giriş Yap</a>
+            <a href="{{ url_for('register') }}" class="buttonStili">Üye Ol</a>
+        </div>
+
+        <!-- Add a button to redirect to randevu.html -->
+        <a href="{{ url_for('not_logged_in_randevu') }}" class="buttonStili">Üye olmadan randevu almak için tıklayınız</a>
+    </div>
+
+
+<script>
+    function showLoginOrRegister() {
+        var uyariPaneli = document.getElementById("uyariPaneli");
+        uyariPaneli.style.display = "block";
+    }
+
+    function redirectToLoginPage() {
+        alert("Giriş sayfasına yönlendiriliyorsunuz.");
+        window.location.href = "login";
+    }
+
+    function redirectToRegisterPage() {
+        alert("Üye ol sayfasına yönlendiriliyorsunuz.");
+        window.location.href = "register";
+    }
+
+    function showInfoForm() {
+        var bilgiFormu = document.getElementById("bilgiFormu");
+        bilgiFormu.style.display = "block";
+    }
+
+    function closeAlert() {
+        var uyariPaneli = document.getElementById("uyariPaneli");
+        uyariPaneli.style.display = "none";
+    }
+
+    function submitForm() {
+        // Add your form submission logic here
+        alert("Randevu alma başarıyla gerçekleşti!");
+    }
+      function ilChanged() {
+            var ilSelect = document.getElementById("ilSelect");
+            var ilceSelect = document.getElementById("ilceSelect");
+            var selectedIl = ilSelect.options[ilSelect.selectedIndex].value;
+
+            // Bu kısımda, seçilen ile göre ilçeleri eklemek için bir API'ye istek atabilirsiniz.
+            // Şu an sadece örnek olarak sabit bir dizi kullanılmıştır.
+            var ilceler = getIlceListesi(selectedIl);
+
+            // İlçe seçimini temizle
+            ilceSelect.innerHTML = "";
+
+            // Yeni ilçeleri ekle
+            for (var i = 0; i < ilceler.length; i++) {
+                var option = document.createElement("option");
+                option.text = ilceler[i];
+                option.value = ilceler[i];
+                ilceSelect.add(option);
+            }
+
+            // İlçe seçimini göster
+            ilceSelect.style.display = "block";
+        }
+
+        function getIlceListesi(selectedIl) {
+            // Bu kısımda seçilen ile göre ilçeleri almak için bir API isteği yapılabilir.
+            // Şu an sadece örnek bir dizi kullanılmıştır.
+            var ilceListesi = [];
+
+            if (selectedIl === "sakarya") {
+                ilceListesi = ["Adapazarı", "Akyazı", "Hendek"];
+            } else if (selectedIl === "istanbul") {
+                ilceListesi = ["Beşiktaş", "Kadıköy", "Üsküdar"];
+            } else if (selectedIl === "izmir") {
+                ilceListesi = ["Konak", "Bornova", "Karşıyaka"];
+            }
+
+            // Dönen ilçe listesini geri döndür
+            return ilceListesi;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            position: relative;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20230713/pngtree-unoccupied-subterranean-parking-area-in-3d-render-image_3861570.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1, h2 {
+            color: #2f4b5c;
+        }
+
+        strong {
+            color: #28a745;
+        }
+
+        a {
+            color: #dc3545;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #43413a;
+
+        }
+        .Button {
+            margin-top: 10px;
+            background-color: #94745e;
+            border-color: #43413a;
+        }
+
+        .Button:hover {
+            background-color: #43413a;
+            border-color: #43413a;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #94745e;
+            border-color: #43413a;
+            color: #fff;
+            padding: 10px;
+            width: 80%; /* Adjust width as needed */
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <div class="row">
+             <strong>{{ session['name'] }}</strong> | <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        <br><br>
+        <div class="row">
+            <h2>Profilinize hoşgeldiniz!</h2>
+        </div>
+        <br>
+        <div class="row">
+            <a class="Button btn btn-primary btn-block" href="{{ url_for('randevu') }}">Randevu Al</a>
+        </div>
+    </div>
+</body>
+
+</html>

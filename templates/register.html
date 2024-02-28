@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20230713/pngtree-unoccupied-subterranean-parking-area-in-3d-render-image_3861570.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #2f4b5c;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #2f4b5c;
+        }
+
+        .btn-primary {
+            background-color: #94745e;
+            border-color: #43413a;
+        }
+
+        .btn-primary:hover {
+            background-color: #43413a;
+            border-color: #43413a;
+        }
+
+        .bottom {
+            color: #2f4b5c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Üye Ol</h2>
+        <form action="{{ url_for('register') }}" method="post">
+            {% if message is defined and message %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+            <div class="form-group">
+                <label for="name">İsim:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Adınızı girin">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Mail adresinizi girin">
+            </div>
+            <div class="form-group">
+                <label for="password">Şifre:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Şifrenizi girin">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Üye Ol</button>
+            <p class="bottom">Zaten bir hesabınız var mı? <a class="bottom" href="{{ url_for('login') }}">Buradan giriş yapın.</a></p>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Al</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20230713/pngtree-unoccupied-subterranean-parking-area-in-3d-render-image_3861570.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #2f4b5c;
+        }
+
+        .Button {
+            margin-top: 10px;
+            background-color: #94745e;
+            border-color: #43413a;
+        }
+
+        .Button:hover {
+            background-color: #43413a;
+            border-color: #43413a;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2f4b5c;
+        }
+
+        select {
+            margin-bottom: 20px;
+            border-color: #43413a;
+        }
+        p{
+         color: #2f4b5c;
+         align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+ <div class="container">
+        <h2 class="text-center mb-4">Hoş geldiniz!</h2>
+        <form method="post" action="/not_logged_in_randevu">
+            <div class="form-group">
+                <label for="emailInput">E-Mail:</label>
+                <input type="email" class="form-control" id="emailInput" name="email" placeholder="E-Mail" required>
+            </div>
+            <div class="form-group">
+                <label for="nameInput">İsim:</label>
+                <input type="text" class="form-control" id="nameInput" name="name" placeholder="İsim" required>
+            </div>
+            <button type="submit" class="Button btn btn-primary btn-block">Devam</button>
+        </form>
+
+        <p id="availabilityMessage"></p>
+
+ </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function saveData() {
+        var email = document.getElementById("emailInput").value;
+        var name = document.getElementById("nameInput").value;
+
+        // AJAX request to send data to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/save_data", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        };
+        xhr.send("email=" + email + "&name=" + name);
+
+        return false; // Form gönderimini engeller
+        }
+
+        function showLocationForm() {
+            var infoForm = document.getElementById("infoForm");
+            var locationForm = document.getElementById("locationForm");
+            infoForm.style.display = "none";
+            locationForm.style.display = "block";
+        }
+
+        function showLoginOrRegister() {
+            var uyariPaneli = document.getElementById("uyariPaneli");
+            uyariPaneli.style.display = "block";
+        }
+
+        function redirectToLoginPage() {
+            alert("Giriş sayfasına yönlendiriliyorsunuz.");
+            window.location.href = "login";
+        }
+
+        function redirectToRegisterPage() {
+            alert("Üye ol sayfasına yönlendiriliyorsunuz.");
+            window.location.href = "register";
+        }
+
+        function showInfoForm() {
+            var bilgiFormu = document.getElementById("bilgiFormu");
+            bilgiFormu.style.display = "block";
+        }
+
+        function closeAlert() {
+            var uyariPaneli = document.getElementById("uyariPaneli");
+            uyariPaneli.style.display = "none";
+        }
+
+        function submitForm() {
+            // Add your form submission logic here
+            alert("Randevu alma başarıyla gerçekleşti!");
+        }
+
+        function ilChanged() {
+            var ilSelect = document.getElementById("ilSelect");
+            var ilceSelect = document.getElementById("ilceSelect");
+            var otoparkSelect = document.getElementById("otoparkSelect");
+            var otoparkGroup = document.getElementById("otoparkGroup");
+            var selectedIl = ilSelect.options[ilSelect.selectedIndex].value;
+
+            var ilceler = getIlceListesi(selectedIl);
+
+            ilceSelect.innerHTML = "<option value='' disabled selected>İlçe Seçin</option>";
+            otoparkSelect.innerHTML = "<option value='' disabled selected>Otopark Seçin</option>";
+
+            for (var i = 0; i < ilceler.length; i++) {
+                var option = document.createElement("option");
+                option.text = ilceler[i];
+                option.value = ilceler[i];
+                ilceSelect.add(option);
+            }
+
+            ilceSelect.style.display = "block";
+            otoparkGroup.style.display = "none"; // İl değiştiğinde otoparkları gizle
+        }
+
+        function ilceChanged() {
+            var ilSelect = document.getElementById("ilSelect");
+            var ilceSelect = document.getElementById("ilceSelect");
+            var otoparkSelect = document.getElementById("otoparkSelect");
+            var otoparkGroup = document.getElementById("otoparkGroup");
+            var selectedIl = ilSelect.options[ilSelect.selectedIndex].value;
+            var selectedIlce = ilceSelect.options[ilceSelect.selectedIndex].value;
+
+            var otoparklar = getOtoparkListesi(selectedIlce);
+
+            otoparkSelect.innerHTML = "<option value='' disabled selected>Otopark Seçin</option>";
+
+            for (var i = 0; i < otoparklar.length; i++) {
+                var option = document.createElement("option");
+                option.text = otoparklar[i];
+                option.value = otoparklar[i];
+                otoparkSelect.add(option);
+            }
+
+            otoparkGroup.style.display = "block"; // İlçe seçildiğinde otoparkları göster
+        }
+
+        function getIlceListesi(selectedIl) {
+            var ilceListesi = [];
+
+            if (selectedIl === "sakarya") {
+                ilceListesi = ["Adapazarı", "Akyazı", "Hendek"];
+            } else if (selectedIl === "istanbul") {
+                ilceListesi = ["Beşiktaş", "Kadıköy", "Üsküdar"];
+            } else if (selectedIl === "izmir") {
+                ilceListesi = ["Konak", "Bornova", "Karşıyaka"];
+            }
+
+            return ilceListesi;
+        }
+
+        function getOtoparkListesi(selectedIlce) {
+            var otoparkListesi = [];
+
+            if (selectedIlce === "Beşiktaş") {
+                otoparkListesi = ["Adayel Otopark", "Engin Otopark", "Kıroğlu Otopark"];
+            } else if (selectedIlce === "Kadıköy") {
+                otoparkListesi = ["Cem Otopark", "Kardeşler Otopark", "Elit Otopark"];
+            } else if (selectedIlce === "Üsküdar") {
+                otoparkListesi = ["Çiçek Otopark", "Fatih Otopark", "Eray Otopark"];
+            }
+
+            return otoparkListesi;
+        }
+    </script>
+</body>
+</html>
