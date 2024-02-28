@@ -1,1 +1,2 @@
 # otopark-project
+Proje kapsamında, Roboflow üzerinde veri seti etiketleme işlemi gerçekleştirilmiştir. Ardından, etiketlenmiş veri seti kullanılarak bir model eğitilmiştir. Eğitilen modelin API'si kullanılarak, web sitesine giriş yapan kullanıcıların seçtiği il ve ilçeye göre ev veya otoparktaki boş yer sayısı görüntülenmektedir. Ayrıca, kullanıcılar randevu alma ve iptal etme işlemlerini de gerçekleştirebilmektedirler.
